@@ -5,6 +5,7 @@ import { WorkshopService } from '../../../core/services/workshop.service';
 import { ColaboradorService } from '../../../core/services/colaborador.service';
 import { Workshop } from '../../../core/models/workshop.model';
 import { Colaborador } from '../../../core/models/colaborador.model';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-lancamento-ata',
@@ -18,7 +19,8 @@ export class LancamentoAtaComponent implements OnInit {
   colaboradores: Colaborador[] = [];
   
   workshopSelecionadoId: number = 0;
-  colaboradorSelecionadoId: number = 0;
+  colaboradoresSelecionados: number[] = [];
+  carregando: boolean = false;
 
   constructor(
     private workshopService: WorkshopService,
@@ -30,13 +32,40 @@ export class LancamentoAtaComponent implements OnInit {
     this.colaboradorService.getColaboradores().subscribe(dados => this.colaboradores = dados);
   }
 
-  registrar(): void {
-    if (this.workshopSelecionadoId && this.colaboradorSelecionadoId) {
-      this.workshopService.registrarPresenca(this.workshopSelecionadoId, this.colaboradorSelecionadoId)
-        .subscribe(() => {
-          alert('Presença registrada com sucesso!');
-          this.colaboradorSelecionadoId = 0;
-        });
+  estaSelecionado(id: number): boolean {
+    return this.colaboradoresSelecionados.includes(id);
+  }
+
+  toggleColaborador(id: number): void {
+    const index = this.colaboradoresSelecionados.indexOf(id);
+    if (index > -1) {
+      this.colaboradoresSelecionados.splice(index, 1);
+    } else {
+      this.colaboradoresSelecionados.push(id);
     }
+  }
+
+  finalizarLancamento(): void {
+    if (this.workshopSelecionadoId === 0 || this.colaboradoresSelecionados.length === 0) return;
+
+    this.carregando = true;
+    
+    const chamadas = this.colaboradoresSelecionados.map(colabId => 
+      this.workshopService.registrarPresenca(this.workshopSelecionadoId, colabId)
+    );
+
+    forkJoin(chamadas).subscribe({
+      next: () => {
+        alert('Ata lançada com sucesso!');
+        this.colaboradoresSelecionados = [];
+        this.workshopSelecionadoId = 0;
+        this.carregando = false;
+      },
+      error: (err) => {
+        console.error(err);
+        alert('Erro ao lançar ata.');
+        this.carregando = false;
+      }
+    });
   }
 }

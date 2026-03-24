@@ -1,39 +1,98 @@
-<div class="card">
-  <h2>Workshops Trimestrais</h2>
-  
-  <table class="tabela-moderna">
-    <thead>
-      <tr>
-        <th>Nome</th>
-        <th>Data</th>
-        <th>Ações</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let w of workshops" (click)="selecionarWorkshop(w)" class="linha-clicavel">
-        <td><strong>{{ w.nome }}</strong></td>
-        <td>{{ w.dataRealizacao | date:'dd/MM/yyyy' }}</td>
-        <td><button class="btn-detalhes">Ver Detalhes</button></td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+<div class="main-container">
+  <header class="page-header">
+    <div class="title-group">
+      <h1>Workshops</h1>
+      <p class="subtitle">Calendário de treinamentos e eventos trimestrais.</p>
+    </div>
 
-<div class="card detalhe-container" *ngIf="workshopSelecionado">
-  <div class="header-detalhe">
-    <h3>Detalhes: {{ workshopSelecionado?.nome }}</h3>
-    <button (click)="workshopSelecionado = null">Fechar</button>
-  </div>
-  
-  <p><strong>Descrição:</strong> {{ workshopSelecionado?.descricao }}</p>
-  
-  <h4>👥 Colaboradores Presentes</h4>
-  <ul class="lista-presenca">
-    <li *ngFor="let c of workshopSelecionado?.participantes">
-      {{ c.nome }}
-    </li>
-    <li *ngIf="!workshopSelecionado?.participantes?.length" class="text-secondary">
-      Nenhuma presença registrada para este workshop.
-    </li>
-  </ul>
+    <div class="kpi-group">
+      <div class="kpi-card">
+        <div class="kpi-icon orange">📚</div>
+        <div class="kpi-data">
+          <span class="kpi-value">{{ workshops.length }}</span>
+          <span class="kpi-label">Realizados</span>
+        </div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-icon purple">⭐</div>
+        <div class="kpi-data">
+          <span class="kpi-value">85%</span>
+          <span class="kpi-label">Adesão</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="header-actions">
+      <button class="btn-success" (click)="exibirFormulario = !exibirFormulario">
+        {{ exibirFormulario ? 'Fechar' : '+ Novo Workshop' }}
+      </button>
+    </div>
+  </header>
+
+  <main class="content-area">
+    <div class="card form-card" *ngIf="exibirFormulario">
+      <h3>{{ editando ? 'Editar' : 'Cadastrar' }} Workshop</h3>
+      <div class="form-grid">
+        <div class="input-group">
+          <label>Nome do Workshop</label>
+          <input type="text" [(ngModel)]="novoWorkshop.nome" placeholder="Ex: Introdução ao Go">
+        </div>
+        <div class="input-group">
+          <label>Data</label>
+          <input type="date" [(ngModel)]="novoWorkshop.dataRealizacao">
+        </div>
+        <div class="input-group full-width">
+          <label>Descrição</label>
+          <textarea [(ngModel)]="novoWorkshop.descricao" placeholder="Sobre o que é o workshop?"></textarea>
+        </div>
+        <div class="actions-form">
+          <button class="btn-primary" (click)="salvar()" [disabled]="!novoWorkshop.nome || !novoWorkshop.dataRealizacao">
+            {{ editando ? 'Atualizar' : 'Salvar' }}
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>NOME</th>
+            <th>DATA</th>
+            <th class="actions-header">AÇÕES</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let w of workshops">
+            <td class="nome-workshop">{{ w.nome }}</td>
+            <td class="data-workshop">{{ w.dataRealizacao | date:'dd/MM/yyyy' }}</td>
+            <td class="actions-cell">
+              <button class="btn-icon" (click)="selecionarWorkshop(w)">👁️</button>
+              <button class="btn-icon" (click)="prepararEdicao(w)">✏️</button>
+              <button class="btn-icon delete" (click)="excluir(w.id)">🗑️</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="detalhes-card" *ngIf="workshopSelecionado">
+      <div class="header-detalhes">
+        <h3>Detalhes: {{ workshopSelecionado.nome }}</h3>
+        <button class="btn-fechar" (click)="workshopSelecionado = null">Fechar</button>
+      </div>
+      <span class="label-descricao">Descrição:</span>
+      <p class="texto-descricao">{{ workshopSelecionado.descricao }}</p>
+      
+      <div class="participantes-section">
+        <h4 class="titulo-participantes">👥 Colaboradores Presentes</h4>
+        <ul class="lista-presenca">
+          <li *ngFor="let c of workshopSelecionado.participantes">
+            <span class="participante-nome">{{ c.nome }}</span>
+            <span class="badge-dept">{{ c.departamento }}</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </main>
 </div>

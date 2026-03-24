@@ -1,58 +1,110 @@
-.dashboard-container {
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
+.main-container {
+  padding: 30px;
 }
 
-.kpi-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 20px;
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  background-color: white;
+  padding: 20px 30px;
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+}
+
+.title-group h1 {
+  margin: 0;
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #1A202C;
+  letter-spacing: -0.02em;
+}
+
+.subtitle {
+  margin: 2px 0 0;
+  color: #718096;
+  font-size: 0.9rem;
+}
+
+.kpi-group {
+  display: flex;
+  gap: 15px;
 }
 
 .kpi-card {
   display: flex;
   align-items: center;
-  gap: 20px;
-  padding: 20px;
+  gap: 10px;
+  background: #F8FAFC;
+  padding: 8px 16px;
+  border-radius: 12px;
+  border: 1px solid #EDF2F7;
 }
 
 .kpi-icon {
-  width: 56px;
-  height: 56px;
-  border-radius: 16px;
+  font-size: 1rem;
+  width: 32px;
+  height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.5rem;
+  border-radius: 8px;
 }
 
-.icon-purple { background-color: #f3e8ff; }
-.icon-blue { background-color: #e0f2fe; }
-.icon-green { background-color: #dcfce7; }
+.kpi-icon.orange { background: #FFFAF0; }
+.kpi-icon.blue { background: #EBF8FF; }
+.kpi-icon.purple { background: #FAF5FF; }
 
-.kpi-info {
+.kpi-data {
   display: flex;
   flex-direction: column;
 }
 
-.kpi-label {
-  color: var(--text-secondary);
-  font-size: 0.85rem;
-  font-weight: 600;
-}
-
 .kpi-value {
-  font-size: 1.5rem;
+  font-size: 1rem;
   font-weight: 800;
-  color: var(--text-main);
+  color: #2D3748;
 }
 
-.welcome-card {
-  background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-main) 100%);
+.kpi-label {
+  font-size: 0.65rem;
+  color: #A0AEC0;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.btn-primary {
+  background-color: #4C51BF;
   color: white;
-  padding: 40px;
+  border: none;
+  padding: 10px 22px;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s;
 }
 
-.welcome-card h2 { color: white; margin-bottom: 10px; }
-.welcome-card p { color: rgba(255,255,255,0.8); margin-bottom: 20px; }
+.btn-primary:hover {
+  background-color: #434190;
+}
+
+.banner-welcome {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 45px;
+  border-radius: 24px;
+  box-shadow: 0 10px 30px rgba(76, 81, 191, 0.15);
+}
+
+.banner-welcome h2 {
+  font-size: 1.8rem;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+
+.banner-welcome p {
+  font-size: 1rem;
+  opacity: 0.9;
+}

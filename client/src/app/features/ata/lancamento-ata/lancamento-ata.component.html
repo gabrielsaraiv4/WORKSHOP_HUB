@@ -1,36 +1,68 @@
-<div class="header-page">
-  <h2>Lançamento de Ata</h2>
-</div>
-
-<div class="card ata-card">
-  <h3>Registrar Presença</h3>
-  <p class="subtitle">Selecione o evento e o colaborador para confirmar a participação.</p>
-
-  <div class="ata-form">
-    <div class="input-group">
-      <label>1. Qual o Workshop?</label>
-      <select [(ngModel)]="workshopSelecionadoId">
-        <option value="0">Selecione um workshop...</option>
-        <option *ngFor="let w of workshops" [value]="w.id">
-          {{ w.nome }} - {{ w.dataRealizacao | date:'dd/MM/yyyy' }}
-        </option>
-      </select>
+<div class="main-container">
+  <header class="page-header">
+    <div class="title-group">
+      <h1>Lançar Ata</h1>
+      <p class="subtitle">Registre a presença dos colaboradores nos eventos de treinamento.</p>
     </div>
 
-    <div class="input-group">
-      <label>2. Quem participou?</label>
-      <select [(ngModel)]="colaboradorSelecionadoId">
-        <option value="0">Selecione um colaborador...</option>
-        <option *ngFor="let c of colaboradores" [value]="c.id">
-          {{ c.nome }} ({{ c.cargo }})
-        </option>
-      </select>
+    <div class="kpi-group" *ngIf="colaboradoresSelecionados.length > 0">
+      <div class="kpi-card">
+        <div class="kpi-icon purple">✅</div>
+        <div class="kpi-data">
+          <span class="kpi-value">{{ colaboradoresSelecionados.length }}</span>
+          <span class="kpi-label">Selecionados</span>
+        </div>
+      </div>
     </div>
 
-    <button class="btn-primary full-width" 
-            (click)="registrar()" 
-            [disabled]="!workshopSelecionadoId || !colaboradorSelecionadoId">
-      Confirmar Presença na Ata
-    </button>
-  </div>
+    <div class="header-actions">
+      <button class="btn-clear" (click)="colaboradoresSelecionados = []" *ngIf="colaboradoresSelecionados.length > 0">
+        Limpar Seleção
+      </button>
+      <button class="btn-save" 
+              [disabled]="workshopSelecionadoId === 0 || colaboradoresSelecionados.length === 0 || carregando"
+              (click)="finalizarLancamento()">
+        <span *ngIf="!carregando">✓ Finalizar Lançamento</span>
+        <span *ngIf="carregando">Processando...</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="content-area">
+    <div class="card-lancamento">
+      <div class="form-group">
+        <label for="workshopSelect">1. Selecione o Workshop</label>
+        <select id="workshopSelect" class="select-moderno" [(ngModel)]="workshopSelecionadoId">
+          <option [value]="0">--- Escolha um evento ---</option>
+          <option *ngFor="let w of workshops" [value]="w.id">
+            {{ w.nome }} - {{ w.dataRealizacao | date:'dd/MM/yyyy' }}
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group" *ngIf="workshopSelecionadoId !== 0">
+        <label class="mb-15">2. Marque os presentes</label>
+        <div class="grid-selecao">
+          <div *ngFor="let c of colaboradores" 
+               class="card-colaborador" 
+               [class.selecionado]="estaSelecionado(c.id)"
+               (click)="toggleColaborador(c.id)">
+            
+            <div class="custom-checkbox">
+              <div class="inner-check" *ngIf="estaSelecionado(c.id)"></div>
+            </div>
+            
+            <div class="colaborador-info">
+              <span class="nome-colab">{{ c.nome }}</span>
+              <span class="dept-colab">{{ c.departamento }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="empty-state" *ngIf="workshopSelecionadoId === 0">
+        <p>Por favor, selecione um workshop acima para listar os colaboradores.</p>
+      </div>
+    </div>
+  </main>
 </div>

@@ -1,8 +1,79 @@
-.header-page {
+.main-container {
+  padding: 30px;
+}
+
+.page-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 30px;
+  background-color: #fff;
+  padding: 20px 30px;
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+}
+
+.title-group h1 {
+  margin: 0;
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #1A202C;
+}
+
+.subtitle {
+  margin: 2px 0 0;
+  color: #718096;
+  font-size: 0.9rem;
+}
+
+.kpi-group {
+  display: flex;
+  gap: 15px;
+}
+
+.kpi-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #F8FAFC;
+  padding: 8px 16px;
+  border-radius: 12px;
+  border: 1px solid #EDF2F7;
+}
+
+.kpi-icon {
+  font-size: 1rem;
+}
+
+.kpi-value {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #2D3748;
+}
+
+.kpi-label {
+  font-size: 0.65rem;
+  color: #A0AEC0;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.btn-success {
+  background-color: #38A169;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.form-card {
+  background: white;
+  padding: 30px;
+  border-radius: 20px;
+  margin-bottom: 30px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
 }
 
 .form-grid {
@@ -21,7 +92,31 @@
 .input-group label {
   font-weight: 700;
   font-size: 0.85rem;
-  color: var(--text-main);
+  color: #2D3748;
+}
+
+.input-group input, .input-group select {
+  padding: 12px;
+  border-radius: 10px;
+  border: 1.5px solid #E2E8F0;
+  background: #F8FAFC;
+}
+
+.btn-primary {
+  background-color: #4C51BF;
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.table-container {
+  background: white;
+  padding: 10px 20px;
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.03);
 }
 
 table {
@@ -32,7 +127,7 @@ table {
 
 th {
   padding: 0 25px;
-  color: var(--text-secondary);
+  color: #718096;
   font-size: 0.75rem;
   text-transform: uppercase;
   font-weight: 700;
@@ -40,9 +135,8 @@ th {
 }
 
 td {
-  background-color: var(--bg-card);
+  background-color: #F8FAFC;
   padding: 20px 25px;
-  border: none;
 }
 
 td:first-child { border-radius: 16px 0 0 16px; }
@@ -50,17 +144,12 @@ td:last-child { border-radius: 0 16px 16px 0; }
 
 .nome-colab {
   font-weight: 700;
-  color: var(--text-main);
-}
-
-.cargo-colab {
-  color: var(--text-secondary);
-  font-size: 0.9rem;
+  color: #1A202C;
 }
 
 .badge-dept {
-  background: #f0f3ff;
-  color: var(--primary-main);
+  background: #EEF2FF;
+  color: #4C51BF;
   padding: 6px 14px;
   border-radius: 20px;
   font-size: 0.75rem;
@@ -73,24 +162,25 @@ td:last-child { border-radius: 0 16px 16px 0; }
 }
 
 .btn-icon {
-  background: var(--bg-main);
-  border: none;
-  width: 40px;
-  height: 40px;
-  border-radius: 12px;
-  margin-left: 10px;
+  background: white;
+  border: 1px solid #E2E8F0;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  margin-left: 8px;
   cursor: pointer;
   transition: 0.2s;
 }
 
 .btn-icon:hover {
-  background: #e2e8f0;
   transform: translateY(-2px);
+  background: #F8FAFC;
 }
 
 .btn-icon.delete:hover {
-  background: #fee2e2;
-  color: #ef4444;
+  background: #FEE2E2;
+  color: #EF4444;
+  border-color: #FCA5A5;
 }
 
 @media (max-width: 1100px) {

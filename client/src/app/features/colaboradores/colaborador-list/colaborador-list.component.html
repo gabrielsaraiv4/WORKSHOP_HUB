@@ -1,63 +1,90 @@
-<div class="header-page">
-  <h2>Gestão de Colaboradores</h2>
-  <button class="btn-success" (click)="exibirFormulario = !exibirFormulario">
-    {{ exibirFormulario ? 'Fechar' : '+ Novo Colaborador' }}
-  </button>
-</div>
-
-<div class="card form-card" *ngIf="exibirFormulario">
-  <h3>{{ editando ? 'Editar' : 'Cadastrar' }} Colaborador</h3>
-  
-  <div class="form-grid">
-    <div class="input-group">
-      <label>Nome Completo</label>
-      <input type="text" [(ngModel)]="novoColaborador.nome" placeholder="Ex: Gabriel Saraiva">
+<div class="main-container">
+  <header class="page-header">
+    <div class="title-group">
+      <h1>Colaboradores</h1>
+      <p class="subtitle">Gerencie o quadro de funcionários e seus cargos.</p>
     </div>
 
-    <div class="input-group">
-      <label>Cargo</label>
-      <input type="text" [(ngModel)]="novoColaborador.cargo" placeholder="Ex: Desenvolvedor Full Stack">
+    <div class="kpi-group">
+      <div class="kpi-card">
+        <div class="kpi-icon blue">👥</div>
+        <div class="kpi-data">
+          <span class="kpi-value">{{ colaboradores.length }}</span>
+          <span class="kpi-label">Ativos</span>
+        </div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-icon orange">🏢</div>
+        <div class="kpi-data">
+          <span class="kpi-value">4</span>
+          <span class="kpi-label">Departamentos</span>
+        </div>
+      </div>
     </div>
 
-    <div class="input-group">
-      <label>Departamento</label>
-      <select [(ngModel)]="novoColaborador.departamento">
-        <option value="">Selecione...</option>
-        <option value="Desenvolvimento">Desenvolvimento</option>
-        <option value="Design">Design</option>
-        <option value="Produto">Produto</option>
-        <option value="RH">RH</option>
-      </select>
-    </div>
-
-    <div class="actions-form">
-      <button class="btn-primary" (click)="salvar()" [disabled]="!novoColaborador.nome || !novoColaborador.cargo">
-        {{ editando ? 'Atualizar' : 'Salvar' }}
+    <div class="header-actions">
+      <button class="btn-success" (click)="exibirFormulario = !exibirFormulario">
+        {{ exibirFormulario ? 'Fechar' : '+ Novo Colaborador' }}
       </button>
     </div>
-  </div>
-</div>
+  </header>
 
-<div class="table-container">
-  <table>
-    <thead>
-      <tr>
-        <th>NOME</th>
-        <th>CARGO</th>
-        <th>DEPARTAMENTO</th>
-        <th>AÇÕES</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let c of colaboradores">
-        <td class="nome-colab">{{ c.nome }}</td>
-        <td class="cargo-colab">{{ c.cargo }}</td>
-        <td><span class="badge-dept">{{ c.departamento }}</span></td>
-        <td class="actions-cell">
-          <button class="btn-icon" (click)="editar(c)">✏️</button>
-          <button class="btn-icon delete" (click)="excluir(c.id)">🗑️</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <main class="content-area">
+    <div class="card form-card" *ngIf="exibirFormulario">
+      <h3>{{ editando ? 'Editar' : 'Cadastrar' }} Colaborador</h3>
+      
+      <div class="form-grid">
+        <div class="input-group">
+          <label>Nome Completo</label>
+          <input type="text" [(ngModel)]="novoColaborador.nome" placeholder="Ex: Gabriel Saraiva">
+        </div>
+
+        <div class="input-group">
+          <label>Cargo</label>
+          <input type="text" [(ngModel)]="novoColaborador.cargo" placeholder="Ex: Desenvolvedor Full Stack">
+        </div>
+
+        <div class="input-group">
+          <label>Departamento</label>
+          <select [(ngModel)]="novoColaborador.departamento">
+            <option value="">Selecione...</option>
+            <option value="Desenvolvimento">Desenvolvimento</option>
+            <option value="Design">Design</option>
+            <option value="Produto">Produto</option>
+            <option value="RH">RH</option>
+          </select>
+        </div>
+
+        <div class="actions-form">
+          <button class="btn-primary" (click)="salvar()" [disabled]="!novoColaborador.nome || !novoColaborador.cargo">
+            {{ editando ? 'Atualizar' : 'Salvar' }}
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>NOME</th>
+            <th>CARGO</th>
+            <th>DEPARTAMENTO</th>
+            <th>AÇÕES</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let c of colaboradores">
+            <td class="nome-colab">{{ c.nome }}</td>
+            <td class="cargo-colab">{{ c.cargo }}</td>
+            <td><span class="badge-dept">{{ c.departamento }}</span></td>
+            <td class="actions-cell">
+              <button class="btn-icon" (click)="editar(c)">✏️</button>
+              <button class="btn-icon delete" (click)="excluir(c.id)">🗑️</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
 </div>
