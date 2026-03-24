@@ -108,3 +108,16 @@
   font-size: 1rem;
   opacity: 0.9;
 }
+
+.chart-container {
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+}
+
+.chart-wrapper {
+  flex: 1;
+  position: relative;
+  height: 300px;
+  width: 100%;
+}

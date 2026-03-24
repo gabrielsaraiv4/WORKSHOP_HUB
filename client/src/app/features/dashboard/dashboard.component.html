@@ -10,7 +10,7 @@
       <div class="kpi-card">
         <div class="kpi-icon orange">📚</div>
         <div class="kpi-data">
-          <span class="kpi-value">25</span>
+          <span class="kpi-value">{{ stats.totalWorkshops }}</span>
           <span class="kpi-label">Workshops</span>
         </div>
       </div>
@@ -18,7 +18,7 @@
       <div class="kpi-card">
         <div class="kpi-icon blue">👥</div>
         <div class="kpi-data">
-          <span class="kpi-value">142</span>
+          <span class="kpi-value">{{ stats.totalColaboradores }}</span>
           <span class="kpi-label">Colaboradores</span>
         </div>
       </div>
@@ -26,7 +26,7 @@
       <div class="kpi-card">
         <div class="kpi-icon purple">📝</div>
         <div class="kpi-data">
-          <span class="kpi-value">98</span>
+          <span class="kpi-value">{{ stats.totalAtas }}</span>
           <span class="kpi-label">Atas</span>
         </div>
       </div>
@@ -41,6 +41,25 @@
     <div class="banner-welcome">
       <h2>Bem-vindo de volta, Gabriel!</h2>
       <p>O sistema Workshop Tracker está pronto para novos registros e consultas.</p>
+    </div>
+
+    <div class="dashboard-grid">
+      <div class="chart-container card">
+        <h3>Distribuição por Departamento</h3>
+        <div class="chart-wrapper">
+          <canvas baseChart
+            [data]="doughnutChartData"
+            [type]="doughnutChartType"
+            [options]="doughnutChartOptions">
+          </canvas>
+        </div>
+      </div>
+
+      <div class="info-extra card">
+        <h3>Resumo Operacional</h3>
+        <p>Dados atualizados em tempo real com base no banco de dados SQLite.</p>
+        <div class="status-badge">Sistema Online</div>
+      </div>
     </div>
   </main>
 
