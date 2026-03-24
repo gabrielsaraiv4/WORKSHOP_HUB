@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("WorkshopApi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b9421db2dcf903ab5f410896b4b1fdb90c526f26")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6b1f95288542e10868fa9df06469150b5291b12d")]
 [assembly: System.Reflection.AssemblyProductAttribute("WorkshopApi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("WorkshopApi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

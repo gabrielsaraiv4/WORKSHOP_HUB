@@ -35,8 +35,27 @@ namespace WorkshopApi.Controllers {
         public async Task<ActionResult<Workshop>> PostWorkshop(Workshop workshop) {
             _context.Workshops.Add(workshop);
             await _context.SaveChangesAsync();
-
             return CreatedAtAction(nameof(GetWorkshop), new { id = workshop.Id }, workshop);
+        }
+
+        [HttpPost("{workshopId}/registrar-presenca/{colaboradorId}")]
+        public async Task<IActionResult> RegistrarPresenca(int workshopId, int colaboradorId) {
+            var workshop = await _context.Workshops
+                .Include(w => w.Participantes)
+                .FirstOrDefaultAsync(w => w.Id == workshopId);
+
+            var colaborador = await _context.Colaboradores.FindAsync(colaboradorId);
+
+            if (workshop == null || colaborador == null) {
+                return NotFound();
+            }
+
+            if (!workshop.Participantes.Any(c => c.Id == colaboradorId)) {
+                workshop.Participantes.Add(colaborador);
+                await _context.SaveChangesAsync();
+            }
+
+            return Ok();
         }
 
         [HttpPut("{id}")]
@@ -44,9 +63,7 @@ namespace WorkshopApi.Controllers {
             if (id != workshop.Id) {
                 return BadRequest();
             }
-
             _context.Entry(workshop).State = EntityState.Modified;
-
             try {
                 await _context.SaveChangesAsync();
             } catch (DbUpdateConcurrencyException) {
@@ -56,7 +73,6 @@ namespace WorkshopApi.Controllers {
                     throw;
                 }
             }
-
             return NoContent();
         }
 
@@ -66,10 +82,8 @@ namespace WorkshopApi.Controllers {
             if (workshop == null) {
                 return NotFound();
             }
-
             _context.Workshops.Remove(workshop);
             await _context.SaveChangesAsync();
-
             return NoContent();
         }
 
