@@ -1,0 +1,95 @@
+.layout {
+  display: flex;
+  height: 100vh;
+  background-color: #f8fafc;
+}
+
+.sidebar {
+  width: 260px;
+  background: white;
+  border-right: 1px solid #e2e8f0;
+  display: flex;
+  flex-direction: column;
+}
+
+.logo {
+  padding: 30px;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #4f46e5;
+}
+
+nav {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+nav a {
+  padding: 15px 20px;
+  text-decoration: none;
+  color: #64748b;
+  font-weight: 500;
+  border-radius: 8px;
+  margin-bottom: 5px;
+}
+
+nav a.active {
+  background: #f1f5f9;
+  color: #4f46e5;
+}
+
+.main-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.topbar {
+  height: 80px;
+  background: white;
+  border-bottom: 1px solid #e2e8f0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 40px;
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+}
+
+.nome {
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.cargo {
+  font-size: 0.75rem;
+  color: #64748b;
+}
+
+.avatar {
+  width: 45px;
+  height: 45px;
+  background: #4f46e5;
+  color: white;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+}
+
+.content {
+  padding: 40px;
+  overflow-y: auto;
+}

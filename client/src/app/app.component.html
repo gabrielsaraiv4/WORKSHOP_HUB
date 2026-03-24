@@ -1,0 +1,27 @@
+<div class="layout">
+  <aside class="sidebar">
+    <div class="logo">Workshop Tracker</div>
+    <nav>
+      <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
+      <a routerLink="/workshops" routerLinkActive="active">Workshops</a>
+      <a routerLink="/colaboradores" routerLinkActive="active">Colaboradores</a>
+      <a routerLink="/lancamento" routerLinkActive="active">Lançar Ata</a>
+    </nav>
+  </aside>
+
+  <main class="main-container">
+    <header class="topbar">
+      <div class="profile">
+        <div class="info">
+          <span class="nome">Gabriel Saraiva</span>
+          <span class="cargo">ADMINISTRADOR</span>
+        </div>
+        <div class="avatar">GS</div>
+      </div>
+    </header>
+
+    <section class="content">
+      <router-outlet></router-outlet>
+    </section>
+  </main>
+</div>
