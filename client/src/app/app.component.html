@@ -1,22 +1,27 @@
 <div class="layout">
   <aside class="sidebar">
-    <div class="logo">Workshop Tracker</div>
+    <div class="logo">
+      Workshop Tracker
+    </div>
     <nav>
-      <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
       <a routerLink="/workshops" routerLinkActive="active">Workshops</a>
       <a routerLink="/colaboradores" routerLinkActive="active">Colaboradores</a>
+      <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
       <a routerLink="/lancamento" routerLinkActive="active">Lançar Ata</a>
     </nav>
   </aside>
 
   <main class="main-container">
     <header class="topbar">
+      <div class="search-bar">
+        <input type="text" placeholder="Procurar...">
+      </div>
       <div class="profile">
-        <div class="info">
-          <span class="nome">Gabriel Saraiva</span>
-          <span class="cargo">ADMINISTRADOR</span>
-        </div>
         <div class="avatar">GS</div>
+        <div style="display: flex; flex-direction: column;">
+          <span style="font-weight: 700; font-size: 0.85rem;">Gabriel Saraiva</span>
+          <span style="color: var(--text-secondary); font-size: 0.75rem;">ADMIN</span>
+        </div>
       </div>
     </header>
 

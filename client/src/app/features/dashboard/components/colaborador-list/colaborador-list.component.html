@@ -1,0 +1,29 @@
+<div class="card">
+  <div class="header-lista">
+    <h2>Equipe de Colaboradores</h2>
+    <p class="text-secondary">Gerencie os membros da equipe que participam dos workshops.</p>
+  </div>
+
+  <table class="tabela-moderna">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nome Completo</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let c of colaboradores">
+        <td>#{{ c.id }}</td>
+        <td class="nome-enfase">{{ c.nome }}</td>
+        <td>
+          <span class="badge-ativo">Ativo</span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="colaboradores.length === 0 && !loading" class="vazio">
+    <p>Nenhum colaborador cadastrado no banco de dados.</p>
+  </div>
+</div>
