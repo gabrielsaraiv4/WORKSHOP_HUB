@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ColaboradorService } from '../../../core/services/colaborador.service';
@@ -22,40 +22,58 @@ export class ColaboradorListComponent implements OnInit {
   editando: boolean = false;
   exibirFormulario: boolean = false;
 
-  constructor(private colaboradorService: ColaboradorService) {}
+  constructor(
+    private colaboradorService: ColaboradorService,
+    private ngZone: NgZone,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     this.carregarColaboradores();
   }
 
   carregarColaboradores(): void {
-    this.colaboradorService.getColaboradores().subscribe((dados: Colaborador[]) => {
-      this.colaboradores = dados;
+    this.colaboradorService.getColaboradores().subscribe({
+      next: (dados: Colaborador[]) => {
+        this.ngZone.run(() => {
+          this.colaboradores = dados;
+          this.cdr.detectChanges();
+        });
+      },
+      error: (err) => console.error('Erro ao carregar colaboradores:', err)
     });
   }
 
   salvar(): void {
-    if (this.editando) {
-      this.colaboradorService.updateColaborador(this.novoColaborador.id, this.novoColaborador).subscribe(() => {
-        this.finalizarAcao();
-      });
-    } else {
-      this.colaboradorService.createColaborador(this.novoColaborador).subscribe(() => {
-        this.finalizarAcao();
-      });
-    }
+    const acao = this.editando 
+      ? this.colaboradorService.updateColaborador(this.novoColaborador.id, this.novoColaborador)
+      : this.colaboradorService.createColaborador(this.novoColaborador);
+
+    acao.subscribe({
+      next: () => {
+        this.ngZone.run(() => {
+          this.finalizarAcao();
+          this.cdr.detectChanges();
+        });
+      }
+    });
   }
 
   editar(c: Colaborador): void {
     this.novoColaborador = { ...c };
     this.editando = true;
     this.exibirFormulario = true;
+    this.cdr.detectChanges();
   }
 
   excluir(id: number): void {
     if (confirm('Deseja excluir este colaborador?')) {
-      this.colaboradorService.deleteColaborador(id).subscribe(() => {
-        this.carregarColaboradores();
+      this.colaboradorService.deleteColaborador(id).subscribe({
+        next: () => {
+          this.ngZone.run(() => {
+            this.carregarColaboradores();
+          });
+        }
       });
     }
   }

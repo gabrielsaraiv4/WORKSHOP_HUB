@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { WorkshopService } from '../../../core/services/workshop.service';
@@ -14,18 +14,20 @@ import { Workshop } from '../../../core/models/workshop.model';
 export class WorkshopListComponent implements OnInit {
   workshops: Workshop[] = [];
   workshopSelecionado: Workshop | null = null;
-  
   novoWorkshop: Workshop = { 
     id: 0, 
     nome: '', 
     descricao: '', 
     dataRealizacao: new Date().toISOString().split('T')[0] 
   };
-  
   editando: boolean = false;
   exibirFormulario: boolean = false;
 
-  constructor(private workshopService: WorkshopService) {}
+  constructor(
+    private workshopService: WorkshopService,
+    private ngZone: NgZone,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     this.carregarWorkshops();
@@ -33,27 +35,36 @@ export class WorkshopListComponent implements OnInit {
 
   carregarWorkshops(): void {
     this.workshopService.getWorkshops().subscribe(dados => {
-      this.workshops = dados;
+      this.ngZone.run(() => {
+        this.workshops = dados;
+        this.cdr.detectChanges();
+      });
     });
   }
 
   selecionarWorkshop(w: Workshop): void {
     this.workshopService.getWorkshopById(w.id).subscribe(detalhes => {
-      this.workshopSelecionado = detalhes;
-      this.exibirFormulario = false;
+      this.ngZone.run(() => {
+        this.workshopSelecionado = detalhes;
+        this.exibirFormulario = false;
+        this.cdr.detectChanges();
+      });
     });
   }
 
   salvar(): void {
-    if (this.editando) {
-      this.workshopService.updateWorkshop(this.novoWorkshop.id, this.novoWorkshop).subscribe(() => {
-        this.finalizarAcao();
-      });
-    } else {
-      this.workshopService.createWorkshop(this.novoWorkshop).subscribe(() => {
-        this.finalizarAcao();
-      });
-    }
+    const acao = this.editando 
+      ? this.workshopService.updateWorkshop(this.novoWorkshop.id, this.novoWorkshop)
+      : this.workshopService.createWorkshop(this.novoWorkshop);
+
+    acao.subscribe({
+      next: () => {
+        this.ngZone.run(() => {
+          this.finalizarAcao();
+          this.cdr.detectChanges();
+        });
+      }
+    });
   }
 
   prepararEdicao(w: Workshop): void {
@@ -64,15 +75,19 @@ export class WorkshopListComponent implements OnInit {
     this.editando = true;
     this.exibirFormulario = true;
     this.workshopSelecionado = null;
+    this.cdr.detectChanges();
   }
 
   excluir(id: number): void {
     if (confirm('Deseja excluir este workshop?')) {
       this.workshopService.deleteWorkshop(id).subscribe(() => {
-        this.carregarWorkshops();
-        if (this.workshopSelecionado?.id === id) {
-          this.workshopSelecionado = null;
-        }
+        this.ngZone.run(() => {
+          this.carregarWorkshops();
+          if (this.workshopSelecionado?.id === id) {
+            this.workshopSelecionado = null;
+          }
+          this.cdr.detectChanges();
+        });
       });
     }
   }

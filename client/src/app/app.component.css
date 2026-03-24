@@ -1,72 +1,35 @@
 .layout {
   display: flex;
   height: 100vh;
-  background-color: var(--bg-main);
-}
-
-.sidebar {
-  width: 280px;
-  background: var(--bg-card);
-  border-right: 1px solid var(--border-color);
-  display: flex;
-  flex-direction: column;
-}
-
-.logo {
-  padding: 40px 30px;
-  font-size: 1.5rem;
-  font-weight: 800;
-  color: var(--primary-main);
-  letter-spacing: -0.04em;
-}
-
-nav {
-  display: flex;
-  flex-direction: column;
-  padding: 10px 20px;
-  gap: 8px;
-}
-
-nav a {
-  padding: 16px 20px;
-  text-decoration: none;
-  color: var(--text-secondary);
-  font-weight: 700;
-  border-radius: 12px;
-  transition: all 0.3s ease;
-}
-
-nav a:hover {
-  color: var(--primary-main);
-  background: var(--bg-main);
-}
-
-nav a.active {
-  background: var(--bg-main);
-  color: var(--primary-main);
+  background-color: #f7fafc;
 }
 
 .main-container {
   flex: 1;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  overflow-y: auto;
 }
 
 .topbar {
-  height: 90px;
-  background: transparent;
+  background: white;
+  height: 70px;
+  padding: 0 30px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 40px;
+  border-bottom: 1px solid #edf2f7;
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
 .search-bar input {
+  padding: 10px 15px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
   width: 300px;
-  background: var(--bg-card);
-  border: none;
-  box-shadow: var(--shadow-main);
+  background: #f8fafc;
 }
 
 .profile {
@@ -76,38 +39,37 @@ nav a.active {
 }
 
 .profile-info {
+  text-align: right;
   display: flex;
   flex-direction: column;
-  text-align: right;
 }
 
 .nome {
   font-weight: 700;
-  color: var(--text-main);
+  color: #2d3748;
   font-size: 0.9rem;
 }
 
 .cargo {
   font-size: 0.7rem;
-  color: var(--text-secondary);
-  font-weight: 700;
+  color: #a0aec0;
+  font-weight: 600;
+  letter-spacing: 0.05em;
 }
 
 .avatar {
-  width: 45px;
-  height: 45px;
-  background: var(--primary-main);
+  width: 40px;
+  height: 40px;
+  background: #4c51bf;
   color: white;
-  border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 800;
-  box-shadow: 0px 10px 20px rgba(103, 58, 183, 0.2);
+  border-radius: 10px;
+  font-weight: 700;
 }
 
 .content {
-  padding: 0 40px 40px 40px;
-  overflow-y: auto;
+  padding: 30px;
   flex: 1;
 }

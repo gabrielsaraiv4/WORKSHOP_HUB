@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, NgZone, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DashboardService, DashboardStats } from '../../core/services/dashboard.service';
 import { BaseChartDirective } from 'ng2-charts';
@@ -35,6 +35,7 @@ export class DashboardComponent implements OnInit {
 
   constructor(
     private dashboardService: DashboardService,
+    private ngZone: NgZone,
     private cdr: ChangeDetectorRef 
   ) {}
 
@@ -45,20 +46,24 @@ export class DashboardComponent implements OnInit {
   carregarTudo(): void {
     this.dashboardService.getStats().subscribe({
       next: (dados) => {
-        this.stats = dados;
-        this.cdr.detectChanges();
+        this.ngZone.run(() => {
+          this.stats = dados;
+          this.cdr.detectChanges();
+        });
       }
     });
 
     setTimeout(() => {
       this.dashboardService.getStatsPorDepartamento().subscribe({
         next: (dados) => {
-          this.doughnutChartData.labels = dados.map(d => d.departamento);
-          this.doughnutChartData.datasets[0].data = dados.map(d => d.quantidade);
-          this.doughnutChartData = { ...this.doughnutChartData }; 
-          this.cdr.detectChanges();
+          this.ngZone.run(() => {
+            this.doughnutChartData.labels = dados.map(d => d.departamento);
+            this.doughnutChartData.datasets[0].data = dados.map(d => d.quantidade);
+            this.doughnutChartData = { ...this.doughnutChartData }; 
+            this.cdr.detectChanges();
+          });
         }
       });
-    }, 100);
+    }, 150);
   }
 }

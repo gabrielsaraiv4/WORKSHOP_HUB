@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { WorkshopService } from '../../../core/services/workshop.service';
@@ -17,19 +17,31 @@ import { forkJoin } from 'rxjs';
 export class LancamentoAtaComponent implements OnInit {
   workshops: Workshop[] = [];
   colaboradores: Colaborador[] = [];
-  
   workshopSelecionadoId: number = 0;
   colaboradoresSelecionados: number[] = [];
   carregando: boolean = false;
 
   constructor(
     private workshopService: WorkshopService,
-    private colaboradorService: ColaboradorService
+    private colaboradorService: ColaboradorService,
+    private ngZone: NgZone,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
-    this.workshopService.getWorkshops().subscribe(dados => this.workshops = dados);
-    this.colaboradorService.getColaboradores().subscribe(dados => this.colaboradores = dados);
+    this.workshopService.getWorkshops().subscribe(dados => {
+      this.ngZone.run(() => {
+        this.workshops = dados;
+        this.cdr.detectChanges();
+      });
+    });
+    
+    this.colaboradorService.getColaboradores().subscribe(dados => {
+      this.ngZone.run(() => {
+        this.colaboradores = dados;
+        this.cdr.detectChanges();
+      });
+    });
   }
 
   estaSelecionado(id: number): boolean {
@@ -43,11 +55,11 @@ export class LancamentoAtaComponent implements OnInit {
     } else {
       this.colaboradoresSelecionados.push(id);
     }
+    this.cdr.detectChanges(); // Feedback imediato no checkbox
   }
 
   finalizarLancamento(): void {
     if (this.workshopSelecionadoId === 0 || this.colaboradoresSelecionados.length === 0) return;
-
     this.carregando = true;
     
     const chamadas = this.colaboradoresSelecionados.map(colabId => 
@@ -56,15 +68,21 @@ export class LancamentoAtaComponent implements OnInit {
 
     forkJoin(chamadas).subscribe({
       next: () => {
-        alert('Ata lançada com sucesso!');
-        this.colaboradoresSelecionados = [];
-        this.workshopSelecionadoId = 0;
-        this.carregando = false;
+        this.ngZone.run(() => {
+          alert('Ata lançada com sucesso!');
+          this.colaboradoresSelecionados = [];
+          this.workshopSelecionadoId = 0;
+          this.carregando = false;
+          this.cdr.detectChanges();
+        });
       },
       error: (err) => {
-        console.error(err);
-        alert('Erro ao lançar ata.');
-        this.carregando = false;
+        this.ngZone.run(() => {
+          console.error(err);
+          alert('Erro ao lançar ata.');
+          this.carregando = false;
+          this.cdr.detectChanges();
+        });
       }
     });
   }
