@@ -1,0 +1,100 @@
+.header-page {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 2fr 1.5fr 1fr auto;
+  gap: 20px;
+  align-items: flex-end;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.input-group label {
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--text-main);
+}
+
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 12px;
+}
+
+th {
+  padding: 0 25px;
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  text-align: left;
+}
+
+td {
+  background-color: var(--bg-card);
+  padding: 20px 25px;
+  border: none;
+}
+
+td:first-child { border-radius: 16px 0 0 16px; }
+td:last-child { border-radius: 0 16px 16px 0; }
+
+.nome-colab {
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.cargo-colab {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.badge-dept {
+  background: #f0f3ff;
+  color: var(--primary-main);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.actions-cell {
+  text-align: right;
+}
+
+.btn-icon {
+  background: var(--bg-main);
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  margin-left: 10px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.btn-icon:hover {
+  background: #e2e8f0;
+  transform: translateY(-2px);
+}
+
+.btn-icon.delete:hover {
+  background: #fee2e2;
+  color: #ef4444;
+}
+
+@media (max-width: 1100px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}

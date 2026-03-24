@@ -1,0 +1,63 @@
+<div class="header-page">
+  <h2>Gestão de Colaboradores</h2>
+  <button class="btn-success" (click)="exibirFormulario = !exibirFormulario">
+    {{ exibirFormulario ? 'Fechar' : '+ Novo Colaborador' }}
+  </button>
+</div>
+
+<div class="card form-card" *ngIf="exibirFormulario">
+  <h3>{{ editando ? 'Editar' : 'Cadastrar' }} Colaborador</h3>
+  
+  <div class="form-grid">
+    <div class="input-group">
+      <label>Nome Completo</label>
+      <input type="text" [(ngModel)]="novoColaborador.nome" placeholder="Ex: Gabriel Saraiva">
+    </div>
+
+    <div class="input-group">
+      <label>Cargo</label>
+      <input type="text" [(ngModel)]="novoColaborador.cargo" placeholder="Ex: Desenvolvedor Full Stack">
+    </div>
+
+    <div class="input-group">
+      <label>Departamento</label>
+      <select [(ngModel)]="novoColaborador.departamento">
+        <option value="">Selecione...</option>
+        <option value="Desenvolvimento">Desenvolvimento</option>
+        <option value="Design">Design</option>
+        <option value="Produto">Produto</option>
+        <option value="RH">RH</option>
+      </select>
+    </div>
+
+    <div class="actions-form">
+      <button class="btn-primary" (click)="salvar()" [disabled]="!novoColaborador.nome || !novoColaborador.cargo">
+        {{ editando ? 'Atualizar' : 'Salvar' }}
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="table-container">
+  <table>
+    <thead>
+      <tr>
+        <th>NOME</th>
+        <th>CARGO</th>
+        <th>DEPARTAMENTO</th>
+        <th>AÇÕES</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let c of colaboradores">
+        <td class="nome-colab">{{ c.nome }}</td>
+        <td class="cargo-colab">{{ c.cargo }}</td>
+        <td><span class="badge-dept">{{ c.departamento }}</span></td>
+        <td class="actions-cell">
+          <button class="btn-icon" (click)="editar(c)">✏️</button>
+          <button class="btn-icon delete" (click)="excluir(c.id)">🗑️</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

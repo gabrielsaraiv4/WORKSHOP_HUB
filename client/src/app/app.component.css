@@ -1,58 +1,72 @@
 .layout {
   display: flex;
   height: 100vh;
-  background-color: #f8fafc;
+  background-color: var(--bg-main);
 }
 
 .sidebar {
-  width: 260px;
-  background: white;
-  border-right: 1px solid #e2e8f0;
+  width: 280px;
+  background: var(--bg-card);
+  border-right: 1px solid var(--border-color);
   display: flex;
   flex-direction: column;
 }
 
 .logo {
-  padding: 30px;
+  padding: 40px 30px;
   font-size: 1.5rem;
   font-weight: 800;
-  color: #4f46e5;
+  color: var(--primary-main);
+  letter-spacing: -0.04em;
 }
 
 nav {
   display: flex;
   flex-direction: column;
-  padding: 10px;
+  padding: 10px 20px;
+  gap: 8px;
 }
 
 nav a {
-  padding: 15px 20px;
+  padding: 16px 20px;
   text-decoration: none;
-  color: #64748b;
-  font-weight: 500;
-  border-radius: 8px;
-  margin-bottom: 5px;
+  color: var(--text-secondary);
+  font-weight: 700;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+nav a:hover {
+  color: var(--primary-main);
+  background: var(--bg-main);
 }
 
 nav a.active {
-  background: #f1f5f9;
-  color: #4f46e5;
+  background: var(--bg-main);
+  color: var(--primary-main);
 }
 
 .main-container {
   flex: 1;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
 .topbar {
-  height: 80px;
-  background: white;
-  border-bottom: 1px solid #e2e8f0;
+  height: 90px;
+  background: transparent;
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: space-between;
   padding: 0 40px;
+}
+
+.search-bar input {
+  width: 300px;
+  background: var(--bg-card);
+  border: none;
+  box-shadow: var(--shadow-main);
 }
 
 .profile {
@@ -61,7 +75,7 @@ nav a.active {
   gap: 15px;
 }
 
-.info {
+.profile-info {
   display: flex;
   flex-direction: column;
   text-align: right;
@@ -69,27 +83,31 @@ nav a.active {
 
 .nome {
   font-weight: 700;
-  color: #1e293b;
+  color: var(--text-main);
+  font-size: 0.9rem;
 }
 
 .cargo {
-  font-size: 0.75rem;
-  color: #64748b;
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  font-weight: 700;
 }
 
 .avatar {
   width: 45px;
   height: 45px;
-  background: #4f46e5;
+  background: var(--primary-main);
   color: white;
-  border-radius: 10px;
+  border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 800;
+  box-shadow: 0px 10px 20px rgba(103, 58, 183, 0.2);
 }
 
 .content {
-  padding: 40px;
+  padding: 0 40px 40px 40px;
   overflow-y: auto;
+  flex: 1;
 }

@@ -1,0 +1,124 @@
+.container-ata {
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.card-lancamento {
+  background: white;
+  width: 100%;
+  max-width: 900px;
+  padding: 40px;
+  border-radius: 24px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+}
+
+.form-group {
+  margin-top: 30px;
+}
+
+.label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.contador {
+  background: #EEF2FF;
+  color: #4C51BF;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 0.8rem;
+}
+
+.select-moderno {
+  width: 100%;
+  padding: 15px;
+  border-radius: 12px;
+  border: 1.5px solid #E2E8F0;
+  background: #F8FAFC;
+  font-size: 1rem;
+  outline: none;
+}
+
+.grid-selecao {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 15px;
+  max-height: 400px;
+  overflow-y: auto;
+  padding: 10px;
+  border: 1px solid #EDF2F7;
+  border-radius: 16px;
+}
+
+.card-colaborador {
+  background: #F8FAFC;
+  border: 2px solid transparent;
+  padding: 15px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.card-colaborador:hover {
+  background: #EDF2F7;
+  transform: translateY(-2px);
+}
+
+.card-colaborador.selecionado {
+  border-color: #4C51BF;
+  background: #F5F7FF;
+}
+
+.colaborador-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.nome-colab {
+  font-weight: 700;
+  color: #2D3748;
+  font-size: 0.9rem;
+}
+
+.id-colab {
+  font-size: 0.75rem;
+  color: #718096;
+}
+
+.actions {
+  margin-top: 40px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+}
+
+.btn-clear {
+  background: transparent;
+  border: none;
+  color: #718096;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-save {
+  background: #4C51BF;
+  color: white;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-save:disabled {
+  background: #CBD5E0;
+  cursor: not-allowed;
+}

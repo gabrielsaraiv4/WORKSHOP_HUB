@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router'; // Adicione esses dois aqui
+import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -15,5 +15,5 @@ import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router'; //
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'client';
+  title = 'WorkshopTracker';
 }

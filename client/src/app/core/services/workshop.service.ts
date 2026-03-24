@@ -18,4 +18,8 @@ export class WorkshopService {
     getWorkshopById(id: number): Observable<Workshop> {
         return this.http.get<Workshop>(`${this.apiUrl}/${id}`);
     }
+
+    registrarPresenca(workshopId: number, colaboradorId: number): Observable<any> {
+        return this.http.post(`${this.apiUrl}/${workshopId}/registrar-presenca/${colaboradorId}`, {});
+    }
 }

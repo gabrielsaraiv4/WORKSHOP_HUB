@@ -15,13 +15,17 @@ namespace WorkshopApi.Controllers {
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Workshop>>> GetWorkshops() {
-            return await _context.Workshops.ToListAsync();
+            return await _context.Workshops
+                .Include(w => w.Participantes)
+                .AsNoTracking()
+                .ToListAsync();
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Workshop>> GetWorkshop(int id) {
             var workshop = await _context.Workshops
                 .Include(w => w.Participantes)
+                .AsNoTracking()
                 .FirstOrDefaultAsync(w => w.Id == id);
 
             if (workshop == null) {

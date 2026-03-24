@@ -1,0 +1,36 @@
+<div class="header-page">
+  <h2>Lançamento de Ata</h2>
+</div>
+
+<div class="card ata-card">
+  <h3>Registrar Presença</h3>
+  <p class="subtitle">Selecione o evento e o colaborador para confirmar a participação.</p>
+
+  <div class="ata-form">
+    <div class="input-group">
+      <label>1. Qual o Workshop?</label>
+      <select [(ngModel)]="workshopSelecionadoId">
+        <option value="0">Selecione um workshop...</option>
+        <option *ngFor="let w of workshops" [value]="w.id">
+          {{ w.nome }} - {{ w.dataRealizacao | date:'dd/MM/yyyy' }}
+        </option>
+      </select>
+    </div>
+
+    <div class="input-group">
+      <label>2. Quem participou?</label>
+      <select [(ngModel)]="colaboradorSelecionadoId">
+        <option value="0">Selecione um colaborador...</option>
+        <option *ngFor="let c of colaboradores" [value]="c.id">
+          {{ c.nome }} ({{ c.cargo }})
+        </option>
+      </select>
+    </div>
+
+    <button class="btn-primary full-width" 
+            (click)="registrar()" 
+            [disabled]="!workshopSelecionadoId || !colaboradorSelecionadoId">
+      Confirmar Presença na Ata
+    </button>
+  </div>
+</div>

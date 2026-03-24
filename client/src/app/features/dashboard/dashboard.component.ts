@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { WorkshopService } from '../../../../services/workshop.service';
-import { ColaboradorService } from '../../../../services/colaborador.service';
+import { WorkshopService } from '../../core/services/workshop.service';
+import { ColaboradorService } from '../../core/services/colaborador.service';
 
 @Component({
   selector: 'app-dashboard',

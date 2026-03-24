@@ -7,7 +7,6 @@ namespace WorkshopApi.Models {
         public DateTime DataRealizacao { get; set; }
         public string Descricao { get; set; } = string.Empty;
 
-        [JsonIgnore]
         public ICollection<Colaborador> Participantes { get; set; } = new List<Colaborador>();
     }
 }

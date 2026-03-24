@@ -1,0 +1,39 @@
+<div class="card">
+  <h2>Workshops Trimestrais</h2>
+  
+  <table class="tabela-moderna">
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>Data</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let w of workshops" (click)="selecionarWorkshop(w)" class="linha-clicavel">
+        <td><strong>{{ w.nome }}</strong></td>
+        <td>{{ w.dataRealizacao | date:'dd/MM/yyyy' }}</td>
+        <td><button class="btn-detalhes">Ver Detalhes</button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="card detalhe-container" *ngIf="workshopSelecionado">
+  <div class="header-detalhe">
+    <h3>Detalhes: {{ workshopSelecionado?.nome }}</h3>
+    <button (click)="workshopSelecionado = null">Fechar</button>
+  </div>
+  
+  <p><strong>Descrição:</strong> {{ workshopSelecionado?.descricao }}</p>
+  
+  <h4>👥 Colaboradores Presentes</h4>
+  <ul class="lista-presenca">
+    <li *ngFor="let c of workshopSelecionado?.participantes">
+      {{ c.nome }}
+    </li>
+    <li *ngIf="!workshopSelecionado?.participantes?.length" class="text-secondary">
+      Nenhuma presença registrada para este workshop.
+    </li>
+  </ul>
+</div>

@@ -1,18 +1,21 @@
 using Microsoft.EntityFrameworkCore;
 using WorkshopApi.Data;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(options => {
+    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+    options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+});
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Registro do Contexto do Banco de Dados
 builder.Services.AddDbContext<AppDbContext>(options => {
     options.UseSqlite("Data Source=workshop.db");
 });
 
-// Configuração do CORS para o Angular
 builder.Services.AddCors(options => {
     options.AddPolicy("AllowAngular", policy => {
         policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
