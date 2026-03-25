@@ -1,13 +1,15 @@
 import { Component, OnInit, NgZone, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ColaboradorService } from '../../../core/services/colaborador.service';
+import { NotificationService } from '../../../core/services/notification.service';
 import { Colaborador } from '../../../core/models/colaborador.model';
 
 @Component({
   selector: 'app-colaborador-list',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, MatSnackBarModule],
   templateUrl: './colaborador-list.component.html',
   styleUrl: './colaborador-list.component.css'
 })
@@ -24,6 +26,7 @@ export class ColaboradorListComponent implements OnInit {
 
   constructor(
     private colaboradorService: ColaboradorService,
+    private notification: NotificationService,
     private ngZone: NgZone,
     private cdr: ChangeDetectorRef
   ) {}
@@ -40,7 +43,10 @@ export class ColaboradorListComponent implements OnInit {
           this.cdr.detectChanges();
         });
       },
-      error: (err) => console.error('Erro ao carregar colaboradores:', err)
+      error: (err) => {
+        console.error(err);
+        this.notification.exibir('Erro ao carregar colaboradores', 'erro');
+      }
     });
   }
 
@@ -52,10 +58,13 @@ export class ColaboradorListComponent implements OnInit {
     acao.subscribe({
       next: () => {
         this.ngZone.run(() => {
+          const mensagem = this.editando ? 'Colaborador atualizado!' : 'Colaborador cadastrado!';
           this.finalizarAcao();
+          this.notification.exibir(mensagem);
           this.cdr.detectChanges();
         });
-      }
+      },
+      error: () => this.notification.exibir('Erro ao salvar colaborador', 'erro')
     });
   }
 
@@ -72,8 +81,10 @@ export class ColaboradorListComponent implements OnInit {
         next: () => {
           this.ngZone.run(() => {
             this.carregarColaboradores();
+            this.notification.exibir('Colaborador excluído com sucesso!');
           });
-        }
+        },
+        error: () => this.notification.exibir('Erro ao excluir colaborador', 'erro')
       });
     }
   }

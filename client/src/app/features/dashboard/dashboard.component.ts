@@ -1,13 +1,15 @@
 import { Component, OnInit, NgZone, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DashboardService, DashboardStats } from '../../core/services/dashboard.service';
+import { NotificationService } from '../../core/services/notification.service';
 import { BaseChartDirective } from 'ng2-charts';
 import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, BaseChartDirective],
+  imports: [CommonModule, BaseChartDirective, MatSnackBarModule],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })
@@ -35,6 +37,7 @@ export class DashboardComponent implements OnInit {
 
   constructor(
     private dashboardService: DashboardService,
+    private notification: NotificationService,
     private ngZone: NgZone,
     private cdr: ChangeDetectorRef 
   ) {}
@@ -50,7 +53,8 @@ export class DashboardComponent implements OnInit {
           this.stats = dados;
           this.cdr.detectChanges();
         });
-      }
+      },
+      error: () => this.notification.exibir('Erro ao carregar estatísticas', 'erro')
     });
 
     setTimeout(() => {

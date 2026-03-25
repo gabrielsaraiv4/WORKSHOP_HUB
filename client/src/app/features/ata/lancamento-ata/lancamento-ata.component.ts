@@ -3,14 +3,16 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { WorkshopService } from '../../../core/services/workshop.service';
 import { ColaboradorService } from '../../../core/services/colaborador.service';
+import { NotificationService } from '../../../core/services/notification.service';
 import { Workshop } from '../../../core/models/workshop.model';
 import { Colaborador } from '../../../core/models/colaborador.model';
 import { forkJoin } from 'rxjs';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-lancamento-ata',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, MatSnackBarModule],
   templateUrl: './lancamento-ata.component.html',
   styleUrl: './lancamento-ata.component.css'
 })
@@ -24,6 +26,7 @@ export class LancamentoAtaComponent implements OnInit {
   constructor(
     private workshopService: WorkshopService,
     private colaboradorService: ColaboradorService,
+    private notification: NotificationService,
     private ngZone: NgZone,
     private cdr: ChangeDetectorRef
   ) {}
@@ -55,7 +58,7 @@ export class LancamentoAtaComponent implements OnInit {
     } else {
       this.colaboradoresSelecionados.push(id);
     }
-    this.cdr.detectChanges(); // Feedback imediato no checkbox
+    this.cdr.detectChanges();
   }
 
   finalizarLancamento(): void {
@@ -69,17 +72,16 @@ export class LancamentoAtaComponent implements OnInit {
     forkJoin(chamadas).subscribe({
       next: () => {
         this.ngZone.run(() => {
-          alert('Ata lançada com sucesso!');
+          this.notification.exibir('Ata lançada com sucesso!');
           this.colaboradoresSelecionados = [];
           this.workshopSelecionadoId = 0;
           this.carregando = false;
           this.cdr.detectChanges();
         });
       },
-      error: (err) => {
+      error: () => {
         this.ngZone.run(() => {
-          console.error(err);
-          alert('Erro ao lançar ata.');
+          this.notification.exibir('Erro ao lançar ata', 'erro');
           this.carregando = false;
           this.cdr.detectChanges();
         });

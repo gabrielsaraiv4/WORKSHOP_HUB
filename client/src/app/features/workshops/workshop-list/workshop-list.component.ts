@@ -2,12 +2,14 @@ import { Component, OnInit, NgZone, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { WorkshopService } from '../../../core/services/workshop.service';
+import { NotificationService } from '../../../core/services/notification.service';
 import { Workshop } from '../../../core/models/workshop.model';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-workshop-list',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, MatSnackBarModule],
   templateUrl: './workshop-list.component.html',
   styleUrl: './workshop-list.component.css'
 })
@@ -25,6 +27,7 @@ export class WorkshopListComponent implements OnInit {
 
   constructor(
     private workshopService: WorkshopService,
+    private notification: NotificationService,
     private ngZone: NgZone,
     private cdr: ChangeDetectorRef
   ) {}
@@ -61,9 +64,11 @@ export class WorkshopListComponent implements OnInit {
       next: () => {
         this.ngZone.run(() => {
           this.finalizarAcao();
+          this.notification.exibir(this.editando ? 'Workshop atualizado!' : 'Workshop criado!');
           this.cdr.detectChanges();
         });
-      }
+      },
+      error: () => this.notification.exibir('Erro ao salvar workshop', 'erro')
     });
   }
 
@@ -80,14 +85,18 @@ export class WorkshopListComponent implements OnInit {
 
   excluir(id: number): void {
     if (confirm('Deseja excluir este workshop?')) {
-      this.workshopService.deleteWorkshop(id).subscribe(() => {
-        this.ngZone.run(() => {
-          this.carregarWorkshops();
-          if (this.workshopSelecionado?.id === id) {
-            this.workshopSelecionado = null;
-          }
-          this.cdr.detectChanges();
-        });
+      this.workshopService.deleteWorkshop(id).subscribe({
+        next: () => {
+          this.ngZone.run(() => {
+            this.carregarWorkshops();
+            this.notification.exibir('Workshop excluído!');
+            if (this.workshopSelecionado?.id === id) {
+              this.workshopSelecionado = null;
+            }
+            this.cdr.detectChanges();
+          });
+        },
+        error: () => this.notification.exibir('Erro ao excluir workshop', 'erro')
       });
     }
   }

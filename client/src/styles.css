@@ -151,3 +151,28 @@ tr td:last-child { border-radius: 0 15px 15px 0; }
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+.success-snackbar {
+  background-color: #38a169 !important;
+  color: #ffffff !important;
+  font-weight: 500;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.error-snackbar {
+  background-color: #e53e3e !important;
+  color: #ffffff !important;
+  font-weight: 500;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.mat-mdc-snack-bar-label {
+  font-family: 'Inter', sans-serif !important;
+  font-size: 14px !important;
+}
+
+.mat-mdc-snack-bar-action {
+  color: #ffffff !important;
+}
