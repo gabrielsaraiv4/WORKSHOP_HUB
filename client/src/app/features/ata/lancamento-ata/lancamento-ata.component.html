@@ -31,17 +31,17 @@
   <main class="content-area">
     <div class="card-lancamento">
       <div class="form-group">
-        <label for="workshopSelect">1. Selecione o Workshop</label>
+        <label class="mb-15" for="workshopSelect">1. Selecione o Workshop</label>
         <select id="workshopSelect" class="select-moderno" [(ngModel)]="workshopSelecionadoId">
-          <option [value]="0">--- Escolha um evento ---</option>
+          <option [value]="0">--- Escolha um evento na lista ---</option>
           <option *ngFor="let w of workshops" [value]="w.id">
-            {{ w.nome }} - {{ w.dataRealizacao | date:'dd/MM/yyyy' }}
+            {{ w.nome }} — {{ w.dataRealizacao | date:'dd/MM/yyyy' }}
           </option>
         </select>
       </div>
 
       <div class="form-group" *ngIf="workshopSelecionadoId !== 0">
-        <label class="mb-15">2. Marque os presentes</label>
+        <label class="mb-15">2. Marque os presentes abaixo</label>
         <div class="grid-selecao">
           <div *ngFor="let c of colaboradores" 
                class="card-colaborador" 
@@ -61,7 +61,7 @@
       </div>
 
       <div class="empty-state" *ngIf="workshopSelecionadoId === 0">
-        <p>Por favor, selecione um workshop acima para listar os colaboradores.</p>
+        <p>A lista de colaboradores aparecerá aqui assim que você selecionar um workshop.</p>
       </div>
     </div>
   </main>

@@ -16,7 +16,7 @@
       <div class="kpi-card">
         <div class="kpi-icon purple">⭐</div>
         <div class="kpi-data">
-          <span class="kpi-value">85%</span>
+          <span class="kpi-value">{{ porcentagemAdesao }}%</span>
           <span class="kpi-label">Adesão</span>
         </div>
       </div>
@@ -24,7 +24,7 @@
 
     <div class="header-actions">
       <button class="btn-success" (click)="exibirFormulario = !exibirFormulario">
-        {{ exibirFormulario ? 'Fechar' : '+ Novo Workshop' }}
+        {{ exibirFormulario ? 'Fechar Painel' : '+ Novo Workshop' }}
       </button>
     </div>
   </header>
@@ -38,16 +38,16 @@
           <input type="text" [(ngModel)]="novoWorkshop.nome" placeholder="Ex: Introdução ao Go">
         </div>
         <div class="input-group">
-          <label>Data</label>
+          <label>Data de Realização</label>
           <input type="date" [(ngModel)]="novoWorkshop.dataRealizacao">
         </div>
         <div class="input-group full-width">
-          <label>Descrição</label>
-          <textarea [(ngModel)]="novoWorkshop.descricao" placeholder="Sobre o que é o workshop?"></textarea>
+          <label>Descrição Detalhada</label>
+          <textarea rows="3" [(ngModel)]="novoWorkshop.descricao" placeholder="Sobre o que é o workshop?"></textarea>
         </div>
         <div class="actions-form">
           <button class="btn-primary" (click)="salvar()" [disabled]="!novoWorkshop.nome || !novoWorkshop.dataRealizacao">
-            {{ editando ? 'Atualizar' : 'Salvar' }}
+            {{ editando ? 'Atualizar Workshop' : 'Confirmar Cadastro' }}
           </button>
         </div>
       </div>
@@ -57,9 +57,9 @@
       <table>
         <thead>
           <tr>
-            <th>NOME</th>
+            <th>NOME DO EVENTO</th>
             <th>DATA</th>
-            <th class="actions-header">AÇÕES</th>
+            <th class="actions-header">GESTÃO</th>
           </tr>
         </thead>
         <tbody>
@@ -67,9 +67,9 @@
             <td class="nome-workshop">{{ w.nome }}</td>
             <td class="data-workshop">{{ w.dataRealizacao | date:'dd/MM/yyyy' }}</td>
             <td class="actions-cell">
-              <button class="btn-icon" (click)="selecionarWorkshop(w)">👁️</button>
-              <button class="btn-icon" (click)="prepararEdicao(w)">✏️</button>
-              <button class="btn-icon delete" (click)="excluir(w.id)">🗑️</button>
+              <button class="btn-icon" (click)="selecionarWorkshop(w)" title="Ver Detalhes">👁️</button>
+              <button class="btn-icon" (click)="prepararEdicao(w)" title="Editar">✏️</button>
+              <button class="btn-icon delete" (click)="excluir(w.id)" title="Excluir">🗑️</button>
             </td>
           </tr>
         </tbody>
@@ -78,14 +78,14 @@
 
     <div class="detalhes-card" *ngIf="workshopSelecionado">
       <div class="header-detalhes">
-        <h3>Detalhes: {{ workshopSelecionado.nome }}</h3>
-        <button class="btn-fechar" (click)="workshopSelecionado = null">Fechar</button>
+        <h3>{{ workshopSelecionado.nome }}</h3>
+        <button class="btn-fechar" (click)="workshopSelecionado = null">Fechar Detalhes</button>
       </div>
       <span class="label-descricao">Descrição:</span>
       <p class="texto-descricao">{{ workshopSelecionado.descricao }}</p>
       
       <div class="participantes-section">
-        <h4 class="titulo-participantes">👥 Colaboradores Presentes</h4>
+        <h4 class="titulo-participantes">👥 Colaboradores Confirmados</h4>
         <ul class="lista-presenca">
           <li *ngFor="let c of workshopSelecionado.participantes">
             <span class="participante-nome">{{ c.nome }}</span>

@@ -42,6 +42,14 @@ export class DashboardComponent implements OnInit {
     private cdr: ChangeDetectorRef 
   ) {}
 
+  get porcentagemAdesao(): number {
+    const totalIdeal = this.stats.totalWorkshops * this.stats.totalColaboradores;
+    if (totalIdeal === 0) return 0;
+    
+    const adesao = (this.stats.totalAtas / totalIdeal) * 100;
+    return Math.round(adesao > 100 ? 100 : adesao);
+  }
+
   ngOnInit(): void {
     this.carregarTudo();
   }
@@ -69,5 +77,40 @@ export class DashboardComponent implements OnInit {
         }
       });
     }, 150);
+  }
+
+  gerarRelatorio(): void {
+    const cabecalho = 'Indicador;Valor\n';
+    const dados = [
+      'RESUMO GERAL',
+      `Total de Workshops;${this.stats.totalWorkshops}`,
+      `Total de Colaboradores;${this.stats.totalColaboradores}`,
+      `Total de Atas Lancadas;${this.stats.totalAtas}`,
+      '',
+      'INSIGHTS DE GESTAO',
+      `Taxa de Adesao;${this.porcentagemAdesao}%`,
+      `Media de participacao;${(this.stats.totalColaboradores / (this.stats.totalWorkshops || 1)).toFixed(1)} por evento`,
+      'Status do Sistema;Online',
+      '',
+      'DADOS DE CONTROLE',
+      `Data de Emissao;${new Date().toLocaleDateString()}`,
+      `Hora de Emissao;${new Date().toLocaleTimeString()}`,
+      `Gerado por;Gabriel Saraiva`
+    ].join('\n');
+
+    const conteudoFinal = cabecalho + dados;
+    const blob = new Blob([conteudoFinal], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement('a');
+    link.setAttribute('href', url);
+    link.setAttribute('download', `relatorio_workshop_${new Date().getTime()}.csv`);
+    link.style.visibility = 'hidden';
+    
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    this.notification.exibir('Relatório detalhado gerado com sucesso!');
   }
 }

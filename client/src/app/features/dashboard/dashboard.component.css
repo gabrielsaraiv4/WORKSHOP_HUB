@@ -1,60 +1,75 @@
-.main-container {
-  padding: 30px;
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap');
+
+:root {
+  --soft-orange: #fff4e6;
+  --soft-blue: #eef2ff;
+  --soft-purple: #f5f3ff;
+  --text-dark: #1a202c;
+  --text-muted: #718096;
+}
+
+.dashboard-wrapper {
+  padding: 40px;
+  font-family: 'Montserrat', sans-serif;
+  background-color: #f8fafc;
+  min-height: 100vh;
 }
 
 .page-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 30px;
-  background-color: white;
-  padding: 20px 30px;
-  border-radius: 20px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+  margin-bottom: 40px;
 }
 
 .title-group h1 {
   margin: 0;
-  font-size: 1.6rem;
+  font-size: 1.8rem;
   font-weight: 800;
-  color: #1A202C;
-  letter-spacing: -0.02em;
+  color: var(--text-dark);
+  letter-spacing: -0.03em;
 }
 
 .subtitle {
-  margin: 2px 0 0;
-  color: #718096;
-  font-size: 0.9rem;
+  margin-top: 4px;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  font-weight: 500;
 }
 
 .kpi-group {
   display: flex;
-  gap: 15px;
+  gap: 20px;
 }
 
 .kpi-card {
   display: flex;
   align-items: center;
-  gap: 10px;
-  background: #F8FAFC;
-  padding: 8px 16px;
-  border-radius: 12px;
-  border: 1px solid #EDF2F7;
+  gap: 16px;
+  background: white;
+  padding: 12px 24px;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.03);
+  transition: transform 0.2s ease;
+}
+
+.kpi-card:hover {
+  transform: translateY(-3px);
 }
 
 .kpi-icon {
-  font-size: 1rem;
-  width: 32px;
-  height: 32px;
+  width: 48px;
+  height: 48px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 8px;
+  border-radius: 50%;
+  font-size: 1.2rem;
 }
 
-.kpi-icon.orange { background: #FFFAF0; }
-.kpi-icon.blue { background: #EBF8FF; }
-.kpi-icon.purple { background: #FAF5FF; }
+.kpi-icon.orange { background-color: var(--soft-orange); }
+.kpi-icon.blue { background-color: var(--soft-blue); }
+.kpi-icon.purple { background-color: var(--soft-purple); }
 
 .kpi-data {
   display: flex;
@@ -62,62 +77,93 @@
 }
 
 .kpi-value {
-  font-size: 1rem;
+  font-size: 1.2rem;
   font-weight: 800;
-  color: #2D3748;
+  color: var(--text-dark);
 }
 
 .kpi-label {
-  font-size: 0.65rem;
-  color: #A0AEC0;
+  font-size: 0.7rem;
+  color: var(--text-muted);
   text-transform: uppercase;
   font-weight: 700;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.05em;
 }
 
 .btn-primary {
-  background-color: #4C51BF;
+  background-color: #4c51bf;
   color: white;
   border: none;
-  padding: 10px 22px;
-  border-radius: 10px;
+  padding: 12px 28px;
+  border-radius: 14px;
   font-weight: 700;
+  font-family: 'Montserrat', sans-serif;
   cursor: pointer;
-  transition: 0.2s;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 14px rgba(76, 81, 191, 0.3);
 }
 
 .btn-primary:hover {
   background-color: #434190;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(76, 81, 191, 0.4);
 }
 
 .banner-welcome {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
   color: white;
-  padding: 45px;
-  border-radius: 24px;
-  box-shadow: 0 10px 30px rgba(76, 81, 191, 0.15);
+  padding: 50px;
+  border-radius: 30px;
+  margin-bottom: 40px;
+  box-shadow: 0 20px 40px rgba(99, 102, 241, 0.15);
 }
 
 .banner-welcome h2 {
-  font-size: 1.8rem;
+  font-size: 2.2rem;
   font-weight: 800;
-  margin-bottom: 8px;
+  margin: 0 0 12px 0;
+  letter-spacing: -0.02em;
 }
 
 .banner-welcome p {
-  font-size: 1rem;
-  opacity: 0.9;
+  font-size: 1.1rem;
+  font-weight: 500;
+  opacity: 0.95;
+  margin: 0;
 }
 
-.chart-container {
-  min-height: 400px;
-  display: flex;
-  flex-direction: column;
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 30px;
+}
+
+.card {
+  background: white;
+  padding: 30px;
+  border-radius: 24px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
+}
+
+.card h3 {
+  font-weight: 700;
+  margin-bottom: 25px;
+  color: var(--text-dark);
+  font-size: 1.1rem;
 }
 
 .chart-wrapper {
-  flex: 1;
-  position: relative;
   height: 300px;
-  width: 100%;
+  position: relative;
+}
+
+.status-badge {
+  display: inline-block;
+  background-color: #f0fdf4;
+  color: #16a34a;
+  padding: 6px 16px;
+  border-radius: 10px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  margin-top: 15px;
 }

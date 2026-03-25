@@ -2,6 +2,7 @@ import { Component, OnInit, NgZone, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { WorkshopService } from '../../../core/services/workshop.service';
+import { ColaboradorService } from '../../../core/services/colaborador.service';
 import { NotificationService } from '../../../core/services/notification.service';
 import { Workshop } from '../../../core/models/workshop.model';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
@@ -16,6 +17,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 export class WorkshopListComponent implements OnInit {
   workshops: Workshop[] = [];
   workshopSelecionado: Workshop | null = null;
+  totalColaboradores: number = 0;
   novoWorkshop: Workshop = { 
     id: 0, 
     nome: '', 
@@ -27,13 +29,35 @@ export class WorkshopListComponent implements OnInit {
 
   constructor(
     private workshopService: WorkshopService,
+    private colaboradorService: ColaboradorService,
     private notification: NotificationService,
     private ngZone: NgZone,
     private cdr: ChangeDetectorRef
   ) {}
 
+  get totalAtas(): number {
+    return this.workshops.filter(w => w.participantes && w.participantes.length > 0).length;
+  }
+
+  get porcentagemAdesao(): number {
+    if (!this.workshops.length) return 0;
+
+    const adesao = (this.totalAtas / this.workshops.length) * 100;
+    return Math.round(adesao > 100 ? 100 : adesao);
+  }
+
   ngOnInit(): void {
     this.carregarWorkshops();
+    this.carregarTotalColaboradores();
+  }
+
+  carregarTotalColaboradores(): void {
+    this.colaboradorService.getColaboradores().subscribe(dados => {
+      this.ngZone.run(() => {
+        this.totalColaboradores = dados.length;
+        this.cdr.detectChanges();
+      });
+    });
   }
 
   carregarWorkshops(): void {

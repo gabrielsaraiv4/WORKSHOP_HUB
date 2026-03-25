@@ -14,7 +14,7 @@
         </div>
       </div>
       <div class="kpi-card">
-        <div class="kpi-icon orange">🏢</div>
+        <div class="kpi-icon purple">🏢</div>
         <div class="kpi-data">
           <span class="kpi-value">4</span>
           <span class="kpi-label">Departamentos</span>
@@ -24,7 +24,7 @@
 
     <div class="header-actions">
       <button class="btn-success" (click)="exibirFormulario = !exibirFormulario">
-        {{ exibirFormulario ? 'Fechar' : '+ Novo Colaborador' }}
+        {{ exibirFormulario ? 'Fechar Painel' : '+ Novo Colaborador' }}
       </button>
     </div>
   </header>
@@ -40,14 +40,14 @@
         </div>
 
         <div class="input-group">
-          <label>Cargo</label>
-          <input type="text" [(ngModel)]="novoColaborador.cargo" placeholder="Ex: Desenvolvedor Full Stack">
+          <label>Cargo Atual</label>
+          <input type="text" [(ngModel)]="novoColaborador.cargo" placeholder="Ex: Software Engineer">
         </div>
 
         <div class="input-group">
           <label>Departamento</label>
           <select [(ngModel)]="novoColaborador.departamento">
-            <option value="">Selecione...</option>
+            <option value="">Selecione o setor...</option>
             <option value="Desenvolvimento">Desenvolvimento</option>
             <option value="Design">Design</option>
             <option value="Produto">Produto</option>
@@ -57,7 +57,7 @@
 
         <div class="actions-form">
           <button class="btn-primary" (click)="salvar()" [disabled]="!novoColaborador.nome || !novoColaborador.cargo">
-            {{ editando ? 'Atualizar' : 'Salvar' }}
+            {{ editando ? 'Atualizar Dados' : 'Salvar Registro' }}
           </button>
         </div>
       </div>
@@ -70,7 +70,7 @@
             <th>NOME</th>
             <th>CARGO</th>
             <th>DEPARTAMENTO</th>
-            <th>AÇÕES</th>
+            <th class="actions-header">GESTÃO</th>
           </tr>
         </thead>
         <tbody>
@@ -79,8 +79,8 @@
             <td class="cargo-colab">{{ c.cargo }}</td>
             <td><span class="badge-dept">{{ c.departamento }}</span></td>
             <td class="actions-cell">
-              <button class="btn-icon" (click)="editar(c)">✏️</button>
-              <button class="btn-icon delete" (click)="excluir(c.id)">🗑️</button>
+              <button class="btn-icon" (click)="editar(c)" title="Editar">✏️</button>
+              <button class="btn-icon delete" (click)="excluir(c.id)" title="Excluir">🗑️</button>
             </td>
           </tr>
         </tbody>

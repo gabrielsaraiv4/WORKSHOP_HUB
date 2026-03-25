@@ -1,11 +1,21 @@
 <aside class="sidebar">
   <div class="logo">
-    Workshop Tracker
+    <span class="logo-main">Workshop</span>
+    <span class="logo-sub">Tracker</span>
   </div>
+  
   <nav>
-    <a (click)="navegar('/dashboard')" routerLinkActive="active" style="cursor: pointer;">📊 Dashboard</a>
-    <a (click)="navegar('/workshops')" routerLinkActive="active" style="cursor: pointer;">📅 Workshops</a>
-    <a (click)="navegar('/colaboradores')" routerLinkActive="active" style="cursor: pointer;">👥 Colaboradores</a>
-    <a (click)="navegar('/lancamento-ata')" routerLinkActive="active" style="cursor: pointer;">📝 Lançar Ata</a>
+    <a routerLink="/dashboard" routerLinkActive="active">
+      <span>📊</span> Dashboard
+    </a>
+    <a routerLink="/workshops" routerLinkActive="active">
+      <span>📅</span> Workshops
+    </a>
+    <a routerLink="/colaboradores" routerLinkActive="active">
+      <span>👥</span> Colaboradores
+    </a>
+    <a routerLink="/lancamento-ata" routerLinkActive="active">
+      <span>📝</span> Lançar Ata
+    </a>
   </nav>
 </aside>
