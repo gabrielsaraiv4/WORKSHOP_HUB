@@ -29,7 +29,7 @@ O Workshop Tracker e uma aplicacao desenvolvida para centralizar a organizacao d
 ## Como Executar o Projeto
 
 1. Clonar o repositorio:
-   git clone https://github.com/gabrielsaraiv4/workshop-tracker
+   git clone https://github.com/gabrielsaraiv4/WORKSHOP_HUB
 
 2. Instalar as dependencias do Node.js:
    npm install
